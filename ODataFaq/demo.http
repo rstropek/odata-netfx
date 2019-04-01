@@ -1,0 +1,39 @@
+@host = http://localhost:12345
+
+###
+GET {{host}}/api/Customer
+
+###
+GET {{host}}/api/Customer/55727f8d-6252-4bdb-8193-4613ee3fbc1c
+
+###
+GET {{host}}/api/CustomerByCountry/AT
+
+###
+GET {{host}}/odata/$metadata
+
+###
+GET {{host}}/odata/Customer
+
+###
+GET {{host}}/odata/Customer?$filter=CountryIsoCode eq 'AT'
+
+###
+GET {{host}}/odata/Customer?$filter=CountryIsoCode eq 'AT'&$expand=Orders
+
+###
+GET {{host}}/odata/Customer/Default.OrderedBike
+
+###
+GET {{host}}/odataexplicit/$metadata
+
+###
+POST {{host}}/token
+Accept: application/json
+Content-Type: : application/x-www-form-urlencoded
+
+grant_type=password&username=admin&password=admin
+
+###
+GET {{host}}/odata/Customer
+Authorization: Bearer AQAAANCMnd8BFdERjHoAwE_Cl-sBAAAAyhNbagU6TUmfO6klZ8l39wAAAAACAAAAAAADZgAAwAAAABAAAABnlOUUwyMR6uDpOiKByt43AAAAAASAAACgAAAAEAAAAHpXQb_mcDfhvX90r0MkhSR4AAAAmzak1uQkn-pkWVRQgrtuWOdKhBXMRgo9fAxGIBUstXUgXWuVkdTqjTkGdee7dm4f-XtA_oB5-H6jnB2ypBqbHuaFSKOHVEBbucMmhiXk4F0xx46oUnI42TwfcE6LiUBS5mZbpbW8Yj0s4lGHcWdgCOeZHDJQlV66FAAAAEg8XiFLv-v9QUKLavKILQ-4OW4V
