@@ -1,0 +1,6 @@
+GET http://localhost:8082/api/customers
+Accept: application/json
+
+####
+GET http://localhost:8082/api/customers/uppercase
+Accept: application/json
