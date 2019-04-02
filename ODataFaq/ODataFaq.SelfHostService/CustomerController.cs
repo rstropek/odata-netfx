@@ -16,6 +16,11 @@ namespace ODataFaq.SelfHostService
 	{
 		private readonly OrderManagementContext context = new OrderManagementContext();
 
+        public CustomerController()
+        {
+            context.Database.Log = Console.Write;
+        }
+
         //[EnableQuery]
         //public IHttpActionResult Get()
         //{
@@ -30,7 +35,7 @@ namespace ODataFaq.SelfHostService
         [EnableQuery]
         public IQueryable<Customer> Get()
         {
-            return context.Customers;
+            return context.Customers.Where(c => c.CountryIsoCode == "AT");
         }
 
         [EnableQuery]
@@ -43,7 +48,17 @@ namespace ODataFaq.SelfHostService
 				   select c;
 		}
 
-		[HttpPost]
+        [EnableQuery]
+        [ODataRoute("Default.CustomersInAustria")]
+        [HttpGet]
+        public IQueryable<Customer> CustomersInAustria()
+        {
+            return from c in this.context.Customers
+                   where c.CountryIsoCode == "AT"
+                   select c;
+        }
+
+        [HttpPost]
 		public async Task<IHttpActionResult> Post([FromBody] Customer customer)
 		{
 			context.Customers.Add(customer);

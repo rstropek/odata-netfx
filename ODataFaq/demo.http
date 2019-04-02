@@ -25,6 +25,9 @@ GET {{host}}/odata/Customer?$filter=CountryIsoCode eq 'AT'&$expand=Orders
 GET {{host}}/odata/Customer/Default.OrderedBike
 
 ###
+GET {{host}}/odata/Customer/Default.CustomersInAustria?$filter=startsWith(CompanyName, 'Fer')
+
+###
 GET {{host}}/odataexplicit/$metadata
 
 ###

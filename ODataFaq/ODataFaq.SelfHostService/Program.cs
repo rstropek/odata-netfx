@@ -76,6 +76,12 @@ namespace ODataFaq.SelfHostService
 				.Function("OrderedBike")
 				.ReturnsCollectionFromEntitySet<Customer>("Customer");
 
+            customers
+                .EntityType
+                .Collection
+                .Function("CustomersInAustria")
+                .ReturnsCollectionFromEntitySet<Customer>("Customer");
+
             // Note fluent API instead of model-bound attributes
             // http://odata.github.io/WebApi/#13-01-modelbound-attribute
             builder.EntityType<Customer>()
