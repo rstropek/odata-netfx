@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.OData.Builder;
+﻿using Microsoft.AspNet.OData.Batch;
+using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Query;
 using Microsoft.OData.Edm;
@@ -7,11 +8,13 @@ using Microsoft.Owin.Hosting;
 using Microsoft.Owin.Security.OAuth;
 using ODataFaq.DataModel;
 using Owin;
+using Simple.OData.Client;
 using System;
 using System.Data.Entity.Core.Metadata.Edm;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web.Http;
+using System.Web.Http.Batch;
 
 [assembly: OwinStartup(typeof(ODataFaq.SelfHostService.Startup))]
 
@@ -19,14 +22,28 @@ namespace ODataFaq.SelfHostService
 {
     class Program
 	{
-		static void Main(string[] _)
+		static async Task Main(string[] _)
 		{
-			using (WebApp.Start<Startup>("http://localhost:12345"))
+            const string url = "http://localhost:12345";
+
+            using (WebApp.Start<Startup>(url))
 			{
-				Console.WriteLine("Listening on port 12345. Press any key to quit.");
+				Console.WriteLine("Listening on port 12345. Press any key to continue.");
 				Console.ReadLine();
-			}
-		}
+
+                //var batch = new ODataBatch(new Uri(url + "/odata/"));
+                //batch += c => c
+                //    .For<Customer>()
+                //    .Set(new Customer() { CustomerId = Guid.NewGuid(), CompanyName = "Kunde 1", CountryIsoCode = "AT" })
+                //    .InsertEntryAsync(false);
+                //batch += c => c
+                //    .For<Customer>()
+                //    .Set(new Customer() { CustomerId = Guid.NewGuid(), CompanyName = "Kunde 2", CountryIsoCode = "DE" })
+                //    .InsertEntryAsync(false);
+                //await batch.ExecuteAsync();
+                //Console.ReadLine();
+            }
+        }
 	}
 
 	public class Startup
@@ -65,6 +82,7 @@ namespace ODataFaq.SelfHostService
 		{
 			var builder = new ODataConventionModelBuilder();
 			var customers = builder.EntitySet<Customer>("Customer");
+            var orders = builder.EntitySet<OrderHeader>("Orders");
 
             // Note global query settings
             // http://odata.github.io/WebApi/#13-01-modelbound-attribute
@@ -82,15 +100,27 @@ namespace ODataFaq.SelfHostService
                 .Function("CustomersInAustria")
                 .ReturnsCollectionFromEntitySet<Customer>("Customer");
 
+            customers
+                .EntityType
+                .Function("GetCountry")
+                .Returns<string>();
+
             // Note fluent API instead of model-bound attributes
             // http://odata.github.io/WebApi/#13-01-modelbound-attribute
             builder.EntityType<Customer>()
                 .Expand(1, SelectExpandType.Automatic, "Orders");
 
+            var server = new HttpServer(config);
+            //config.Routes.MapHttpBatchRoute(
+            //    routeName: "batch",
+            //    routeTemplate: "odata/batch",
+            //    batchHandler: new DefaultHttpBatchHandler(server));
+
             config.MapODataServiceRoute(
                 routeName: "odata",
                 routePrefix: "odata",
-                model: builder.GetEdmModel());
+                model: builder.GetEdmModel(),
+                new DefaultODataBatchHandler(server));
         }
 
         private static void SetupOauthServer(IAppBuilder app)

@@ -97,6 +97,15 @@
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Simple.OData.Client.Core, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Simple.OData.V4.Client.5.6.2\lib\net452\Simple.OData.Client.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.OData.Client.Dynamic, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Simple.OData.V4.Client.5.6.2\lib\net452\Simple.OData.Client.Dynamic.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.OData.Client.V4.Adapter, Version=5.6.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Simple.OData.V4.Client.5.6.2\lib\net452\Simple.OData.Client.V4.Adapter.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -125,6 +134,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomerByContryWebApiController.cs" />
+    <Compile Include="OrdersController.cs" />
     <Compile Include="CustomerController.cs" />
     <Compile Include="CustomerWebApiController.cs" />
     <Compile Include="Program.cs" />

@@ -7,6 +7,9 @@ GET {{host}}/api/Customer
 GET {{host}}/api/Customer/55727f8d-6252-4bdb-8193-4613ee3fbc1c
 
 ###
+GET {{host}}/odata/Customer(55727f8d-6252-4bdb-8193-4613ee3fbc1c)/Default.GetCountry()
+
+###
 GET {{host}}/api/CustomerByCountry/AT
 
 ###
@@ -14,6 +17,9 @@ GET {{host}}/odata/$metadata
 
 ###
 GET {{host}}/odata/Customer
+
+###
+GET {{host}}/odata/Orders
 
 ###
 GET {{host}}/odata/Customer?$filter=CountryIsoCode eq 'AT'
@@ -40,3 +46,6 @@ grant_type=password&username=admin&password=admin
 ###
 GET {{host}}/odata/Customer
 Authorization: Bearer AQAAANCMnd8BFdERjHoAwE_Cl-sBAAAAyhNbagU6TUmfO6klZ8l39wAAAAACAAAAAAADZgAAwAAAABAAAABnlOUUwyMR6uDpOiKByt43AAAAAASAAACgAAAAEAAAAHpXQb_mcDfhvX90r0MkhSR4AAAAmzak1uQkn-pkWVRQgrtuWOdKhBXMRgo9fAxGIBUstXUgXWuVkdTqjTkGdee7dm4f-XtA_oB5-H6jnB2ypBqbHuaFSKOHVEBbucMmhiXk4F0xx46oUnI42TwfcE6LiUBS5mZbpbW8Yj0s4lGHcWdgCOeZHDJQlV66FAAAAEg8XiFLv-v9QUKLavKILQ-4OW4V
+
+###
+GET {{host}}/odata/orders(ed7a7cbd-4a07-4e2b-8a0b-004e6b648666)/customer/Default.GetCountry()

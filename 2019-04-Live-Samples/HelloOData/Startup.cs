@@ -22,7 +22,7 @@ namespace HelloOData
             app.Use(async (context, next) =>
             {
                 var identity = new GenericIdentity("Tom");
-                Thread.CurrentPrincipal = new GenericPrincipal(identity, new[] { "Admin2" });
+                Thread.CurrentPrincipal = new GenericPrincipal(identity, new[] { "Admin" });
                 if (HttpContext.Current != null)
                 {
                     HttpContext.Current.User = Thread.CurrentPrincipal;
@@ -35,6 +35,8 @@ namespace HelloOData
 
             var config = new HttpConfiguration();
             config.MapHttpAttributeRoutes();
+            config.EnableCors();
+            app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
             app.UseWebApi(config);
 
             RegisterOData(config);
@@ -44,7 +46,11 @@ namespace HelloOData
         {
             // 1) EDM bauen
             var builder = new ODataConventionModelBuilder();
-            builder.EntitySet<Customer>("Customers");
+            var customersEntitySet = builder.EntitySet<Customer>("Customers");
+
+            customersEntitySet.EntityType.Collection
+                .Function("CustomersFromAustria")
+                .ReturnsCollectionFromEntitySet<Customer>("Customers");
 
             // 2) Routing für Controller aufsetzen
             config.MapODataServiceRoute(

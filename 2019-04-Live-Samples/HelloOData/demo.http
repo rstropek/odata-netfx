@@ -1,6 +1,45 @@
+GET http://localhost:8082/odata/$metadata
+
+###
+GET http://localhost:8082/odata/customers/Default.CustomersFromAustria?$filter=CustomerName eq 'Dummy'
+
+###
 GET http://localhost:8082/api/customers
 Accept: application/json
 
 ####
 GET http://localhost:8082/api/customers/uppercase
 Accept: application/json
+
+###
+GET http://localhost:8082/odata/customers
+
+###
+POST http://localhost:8082/odata/customers
+Content-Type: application/json
+
+{
+      "CustomerName": "Johne Doe",
+      "Country": "US"
+}
+
+###
+PUT http://localhost:8082/odata/customers(1)
+Content-Type: application/json
+
+{
+      "ID": 1,
+      "CustomerName": "Johne Doe",
+      "Country": "UK"
+}
+
+###
+PATCH http://localhost:8082/odata/customers(1)
+Content-Type: application/json
+
+{
+      "Country": "Mars"
+}
+
+###
+DELETE http://localhost:8082/odata/customers(1)

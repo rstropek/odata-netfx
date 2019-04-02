@@ -39,6 +39,12 @@ namespace ODataFaq.SelfHostService
         }
 
         [EnableQuery]
+        public SingleResult<Customer> Get(Guid key)
+        {
+            return SingleResult<Customer>.Create(context.Customers.Where(c => c.CustomerId == key));
+        }
+
+        [EnableQuery]
 		[ODataRoute("Default.OrderedBike")]
 		[HttpGet]
 		public IQueryable<Customer> OrderedBike()
@@ -47,6 +53,9 @@ namespace ODataFaq.SelfHostService
 				   where c.Orders.Count(o => o.OrderDetails.Count(od => od.Product.CategoryCode == "BIKE") > 0) > 0
 				   select c;
 		}
+
+        [HttpGet]
+        public IHttpActionResult GetCountry(Guid key) => Ok($"{key} is from Austria");
 
         [EnableQuery]
         [ODataRoute("Default.CustomersInAustria")]
